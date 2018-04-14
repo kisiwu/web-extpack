@@ -1,5 +1,5 @@
 # web-extpack
-CLI to bundle your a WebExtension using webpack
+CLI to bundle a WebExtension using webpack
 
 Using a webpack config file with 4 more available properties that overwrite 'entry' and 'output':
 
