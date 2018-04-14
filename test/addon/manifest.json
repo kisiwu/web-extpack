@@ -1,0 +1,44 @@
+{
+
+    "manifest_version": 2,
+    "name": "WebExtPackTest",
+    "version": "0.1",
+  
+    "description": "web-extpack test",
+  
+    "icons": {
+      "64": "icons/icon64.png"
+    },
+  
+    "permissions": [
+      "<all_urls>",
+      "tabs"
+    ],
+  
+    "content_security_policy": "script-src 'self'; object-src 'self'",
+  
+    "page_action": {
+      "browser_style": true,
+      "default_icon": "icons/icon32.png",
+      "default_title": "WebExtPack-test (Alt+K)"
+    },
+  
+    "background": {
+      "scripts": ["background_scripts/index.js"]
+    },
+  
+    "web_accessible_resources": [
+        "icons/icon32.png",
+        "icons/icon64.png"
+    ],
+  
+    "commands": {
+      "run": {
+        "suggested_key": {
+          "default": "Alt+K"
+        },
+        "description": "Command"
+      }
+    }
+  
+  }
