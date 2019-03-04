@@ -1,7 +1,7 @@
 {
   "name": "web-extpack",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI to bundle a WebExtension module using webpack",
   "main": "lib/FileLoader.js",
   "repository": {
@@ -25,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "webpack": "^2.3.2",
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

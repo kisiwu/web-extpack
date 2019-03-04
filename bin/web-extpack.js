@@ -8,7 +8,8 @@ const pckg = require('../package'),
       path = require('path'),
       fork = require('child_process').fork,
       events = require('events'),
-      program = require('commander');
+      program = require('commander'),
+      _init = require('./_init');
 
 // the lib's config file
 const WEBPACK_CONFIG_FILE = '_webpack.config.js'
@@ -36,6 +37,25 @@ program
       console.log(" ",pckg.name, pckg.version);
       console.log("");
   });
+
+program
+  .command('init')
+  .option('--config <name>', 'Path to the config file [default: '+USER_CONFIG_FILE+']', function(value){
+    raw.config = value
+    return path.join( "" , value) || options.config
+  })
+  .description('create the files and directories')
+  .action(function (value) {
+
+    var files = {
+      "config": raw.config || options.config
+    }
+
+    _init.init(files)
+
+    process.exit(0)
+  });
+
 
 // on config option
 program.on('option:config', function (value) {
