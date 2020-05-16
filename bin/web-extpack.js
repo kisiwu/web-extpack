@@ -4,76 +4,53 @@
 
 // modules
 const pckg = require('../package'),
-      fs = require('fs'),
-      path = require('path'),
-      fork = require('child_process').fork,
-      events = require('events'),
-      program = require('commander'),
-      _init = require('./_init');
+  fs = require('fs'),
+  path = require('path'),
+  fork = require('child_process').fork,
+  events = require('events'),
+  { program } = require('commander'),
+  _init = require('./_init');
 
 // the lib's config file
-const WEBPACK_CONFIG_FILE = '_webpack.config.js'
+const WEBPACK_CONFIG_FILE = '_webpack.config.js';
 
 // default user's config file
-const USER_CONFIG_FILE = 'web-extpack.config.js'
+const USER_CONFIG_FILE = 'web-extpack.config.js';
 
-// raw options
-var raw = {
-};
-// formatted options
-var options = {
-    config: USER_CONFIG_FILE
+// formatted defaultOptions
+const defaultOptions = {
+  config: USER_CONFIG_FILE,
 };
 
 // program options
 program
+  .passCommandToAction(false);
+
+program
   .version(pckg.version)
-  .usage('[options]')
-  .option('--config <name>', 'Path to the config file [default: '+USER_CONFIG_FILE+']', function(value){
-    raw.config = value
-    return path.join( "" , value) || options.config
-  }).on('--help' ,str => {
-      console.log("");
-      console.log(" ",pckg.name, pckg.version);
-      console.log("");
+  .usage('<command> [options]')
+  .on('--help', (str) => {
+    console.log('');
+    console.log(' ', pckg.name, pckg.version);
+    console.log('');
   });
 
 program
-  .command('init')
-  .option('--config <name>', 'Path to the config file [default: '+USER_CONFIG_FILE+']', function(value){
-    raw.config = value
-    return path.join( "" , value) || options.config
-  })
-  .description('create the files and directories')
-  .action(function (value) {
+  .command('build')
+  .option(
+    '--config <name>',
+    'Path to the config file [default: ' + USER_CONFIG_FILE + ']'
+  )
+  .action(function (opts) {
+    // format arguments
+    var config = path.resolve(opts.config || defaultOptions['config']);
 
-    var files = {
-      "config": raw.config || options.config
-    }
+    // create env variable used in WEBPACK_CONFIG_FILE
+    process.env.USER_CONFIG_FILE = config;
 
-    _init.init(files)
-
-    process.exit(0)
-  });
-
-
-// on config option
-program.on('option:config', function (value) {
-    options['config'] = value
-});
-
-// parse CLI arguments
-program.parse(process.argv)
-
-// format arguments
-options['config'] = path.resolve(options['config']);
-
-// create env variable used in WEBPACK_CONFIG_FILE
-process.env.USER_CONFIG_FILE = options['config'];
-
-// exec
-var error;
-runWebpack("--config "+path.resolve(__dirname, WEBPACK_CONFIG_FILE))
+    // exec
+    var error;
+    runWebpack('--config ' + path.resolve(__dirname, WEBPACK_CONFIG_FILE));
     /*.on('stdout', data => {
         console.log(data.toString());
     })
@@ -86,6 +63,35 @@ runWebpack("--config "+path.resolve(__dirname, WEBPACK_CONFIG_FILE))
             console.error("ERROR");
     });
     */
+  });
+
+program
+  .command('init')
+  .option(
+    '--config <name>',
+    'Path to the config file [default: ' + USER_CONFIG_FILE + ']'
+  )
+  .description('create the files and directories')
+  .action(function (opts) {
+    var files = {
+      config: opts.config || defaultOptions.config,
+    };
+
+    _init.init(files);
+
+    process.exit(0);
+  });
+
+// on config option
+/*
+program.on('option:config', function (value) {
+  console.log('config', value);
+  defaultOptions['config'] = value;
+});
+*/
+
+// parse CLI arguments
+program.parse(process.argv);
 
 /**
  * @function
@@ -93,27 +99,27 @@ runWebpack("--config "+path.resolve(__dirname, WEBPACK_CONFIG_FILE))
  * @param {String} options Webpack CLI options
  * @returns {void}
  */
-function runWebpack( options ) {
+function runWebpack(options) {
+  // var emitter = new events.EventEmitter();
 
-    // var emitter = new events.EventEmitter();
+  var args = [];
 
-    var args = [];
-
-    if(options){
-      if(typeof options === 'string'){
-        options = options.split(" ").map(function(arg){
-          return arg.trim();
-        });
-      }
+  if (options) {
+    if (typeof options === 'string') {
+      options = options.split(' ').map(function (arg) {
+        return arg.trim();
+      });
     }
+  }
 
-    if(!Array.isArray(options))
-      options = [];
+  if (!Array.isArray(options)) options = [];
 
-    args = args.concat(options);
+  args = args.concat(options);
 
-    var proc = fork( './node_modules/webpack/bin/webpack.js', args, { silent: false } );
-    /*proc.on('message', data => {
+  var proc = fork('./node_modules/webpack/bin/webpack.js', args, {
+    silent: false,
+  });
+  /*proc.on('message', data => {
         // in case of process.send
     } );
     proc.stdout.on( 'data', ( data ) => {
