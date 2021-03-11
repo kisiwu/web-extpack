@@ -1,5 +1,5 @@
 module.exports = {
-    "ENTRY_DIR": "test/dev",
+    "ENTRY_DIR": "test/src",
     "ENTRY_FILES_EXT": [".js"],
     "OUTPUT_DIR": "test/addon",
     "OUTPUT_FILES": "[name]/index.js",
