@@ -34,7 +34,7 @@ function setup(configPath, options) {
 
   SETUP_FILES.forEach((filepath) => {
     if (filepath.indexOf('/') > -1) {
-      mkdir.sync(path.dirname(f));
+      mkdir.sync(path.dirname(filepath));
     }
     try {
       if (!fs.existsSync(filepath))
