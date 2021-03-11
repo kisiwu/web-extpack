@@ -3,6 +3,7 @@ module.exports = {
     "ENTRY_FILES_EXT": [".js"],
     "OUTPUT_DIR": "test/addon",
     "OUTPUT_FILES": "[name]/index.js",
+    "mode": "production",
     "module": {
         "rules" : [
             {

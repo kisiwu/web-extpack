@@ -11,7 +11,7 @@ const WEBPACK_CONFIG_FILE = '_webpack.config.js';
  * @returns {void}
  */
 function runWebpack(options) {
-  const args = [];
+  let args = [];
 
   if (options) {
     if (typeof options === 'string') {
