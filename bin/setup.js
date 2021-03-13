@@ -60,7 +60,7 @@ function setupFactory(program) {
       ENTRY_DIR: 'src',
       ENTRY_FILES_EXT: ['.js'],
       OUTPUT_DIR: 'build',
-      OUTPUT_FILES: '[name]/index.js',
+      OUTPUT_FILES: '[name]/bundle.js',
       module: {
         rules: [
           {
