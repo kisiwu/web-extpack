@@ -1,7 +1,7 @@
 # web-extpack
 CLI to bundle a WebExtension using webpack.
 
-It uses a [webpack](https://www.npmjs.com/package/webpack) config file with 4 more available properties that overwrite "entry" and "output":
+It uses a [webpack](https://www.npmjs.com/package/webpack) config file with 4 more available properties that set "entry", "output.path" and "output.filename" if not already set:
 
 - ENTRY_DIR: The entry directory. (default: "src")
 - ENTRY_FILES_EXT: Entry files with those extensions. (default: [".js"])

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "MyWebExt",
+  "version": "0.0.1",
+  "author": "MyName",
+
+  "permissions": ["<all_urls>", "tabs"],
+
+  "content_security_policy": "script-src 'self'",
+
+  "background": {
+    "scripts": ["background_scripts/bundle.js"]
+  },
+
+  "content_scripts": [
+    {
+      "js": ["content_scripts/bundle.js"]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 
 // modules
 const pckg = require('../package'),
-  { Command } = require('commander'),
+  { Command, Option } = require('commander'),
   setupFactory = require('./setup'),
   buildFactory = require('./build');
 
@@ -15,27 +15,29 @@ const program = new Command();
 
 program
   .version(pckg.version)
-  .option(
-    '--config <name>',
-    'Path to the config file.',  
-    USER_CONFIG_FILE
-  );
+  .option('--config <name>', 'Path to the config file.', USER_CONFIG_FILE);
 
 /**
  * setup command
  */
- program
- .command('setup')
- .alias('init')
- .description('setup files')
- .action(setupFactory(program));
+program
+  .command('setup')
+  .alias('init')
+  .description('setup files')
+  .addOption(
+    new Option(
+      '-t, --template <template-name>',
+      'Choose a template for the config file.'
+    )
+      .choices(['basic', 'advanced'])
+      .default('basic')
+  )
+  .action(setupFactory(program));
 
 /**
  * start command
  */
-program
-  .command('build')
-  .action(buildFactory(program));
+program.command('build').action(buildFactory(program));
 
 // parse CLI arguments
 program.parse(process.argv);
