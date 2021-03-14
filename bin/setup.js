@@ -60,12 +60,12 @@ function setup(configPath, content) {
  * @returns {function} action
  */
 function setupFactory(program) {
-  return function setupAction() {
+  return function setupAction(cmdOpts) {
     const opts = program.opts();
 
     const config = path.resolve(opts.config);
 
-    setup(config, templates[opts.template]());
+    setup(config, templates[cmdOpts.template]());
   };
 }
 
