@@ -23,4 +23,8 @@ web-extpack build [options]
 ```
 
 ## Options
-- `--config`: Path to the config file. (default: "web-extpack.config.js")
+- `--config <path>`: Path to the config file. (default: "web-extpack.config.js")
+
+### setup options
+- `-t, --template <template-name>`: Choose a template for the config file. (choices: ["basic", "advanced"], default: "basic")
+- `--src-files`: Add empty files in "src" folder if there is no "src/manifest.json".

@@ -15,7 +15,7 @@ const program = new Command();
 
 program
   .version(pckg.version)
-  .option('--config <name>', 'Path to the config file.', USER_CONFIG_FILE);
+  .option('--config <path>', 'Path to the config file.', USER_CONFIG_FILE);
 
 /**
  * setup command
@@ -31,6 +31,12 @@ program
     )
       .choices(['basic', 'advanced'])
       .default('basic')
+  )
+  .addOption(
+    new Option(
+      '--src-files',
+      'Add empty files in "src" folder if there is no "src/manifest.json".'
+    )
   )
   .action(setupFactory(program));
 

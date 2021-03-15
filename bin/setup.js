@@ -3,7 +3,7 @@ const fs = require('fs'),
   mkdir = require('mkdirp'),
   templates = {
     basic: require('./templates/basic'),
-    advanced: require('./templates/advanced')
+    advanced: require('./templates/advanced'),
   };
 
 const SETUP_MANIFEST_FILE = 'src/manifest.json';
@@ -12,7 +12,13 @@ const SETUP_FILES = [
   'src/content_scripts/content.js',
 ];
 
-function setup(configPath, content) {
+/**
+ * 
+ * @param {string} configPath 
+ * @param {string} content 
+ * @param {boolean} srcFiles create SETUP_FILES files
+ */
+function setup(configPath, content, srcFiles) {
   // create directories
   mkdir.sync(path.dirname(configPath));
 
@@ -31,26 +37,34 @@ function setup(configPath, content) {
     process.exitCode = 1;
   }
 
-  mkdir.sync(path.dirname(SETUP_MANIFEST_FILE));
+  if (srcFiles) {
+    mkdir.sync(path.dirname(SETUP_MANIFEST_FILE));
 
-  // write manifest and other files if manifest does not already exists
-  try {
-    if (!fs.existsSync(SETUP_MANIFEST_FILE)) {
-      fs.copyFileSync(__dirname + '/../lib/setup/' + SETUP_MANIFEST_FILE, SETUP_MANIFEST_FILE);
-      SETUP_FILES.forEach((filepath) => {
-        if (filepath.indexOf('/') > -1) {
-          mkdir.sync(path.dirname(filepath));
-        }
-        try {
-          if (!fs.existsSync(filepath))
-            fs.copyFileSync(__dirname + '/../lib/setup/' + filepath, filepath);
-        } catch (e) {
-          console.error(e);
-        }
-      });
+    // write manifest and other files if manifest does not already exists
+    try {
+      if (!fs.existsSync(SETUP_MANIFEST_FILE)) {
+        fs.copyFileSync(
+          __dirname + '/../lib/setup/' + SETUP_MANIFEST_FILE,
+          SETUP_MANIFEST_FILE
+        );
+        SETUP_FILES.forEach((filepath) => {
+          if (filepath.indexOf('/') > -1) {
+            mkdir.sync(path.dirname(filepath));
+          }
+          try {
+            if (!fs.existsSync(filepath))
+              fs.copyFileSync(
+                __dirname + '/../lib/setup/' + filepath,
+                filepath
+              );
+          } catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch(err) {
-    console.error(err);
   }
 }
 
@@ -65,7 +79,7 @@ function setupFactory(program) {
 
     const config = path.resolve(opts.config);
 
-    setup(config, templates[cmdOpts.template]());
+    setup(config, templates[cmdOpts.template](), cmdOpts.srcFiles);
   };
 }
 
