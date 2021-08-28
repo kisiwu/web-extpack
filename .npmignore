@@ -1,5 +1,6 @@
 # .npmignore
 test
+.github
 
 # Logs
 logs
