@@ -10,7 +10,7 @@ It uses a [webpack](https://www.npmjs.com/package/webpack) config file with 4 mo
 
 ## Installation
 ```sh
-npm install web-extpack
+npm install --save-dev web-extpack
 ```
 
 ## Commands
