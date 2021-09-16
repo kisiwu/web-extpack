@@ -73,6 +73,7 @@ module.exports = {
           globOptions: {
             ignore: ['**/*.js', '**/*.css', '**/*.sass', '**/*.scss'],
           },
+          noErrorOnMissing: true,
         },
       ],
     }),

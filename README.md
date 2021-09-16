@@ -8,6 +8,11 @@ It uses a [webpack](https://www.npmjs.com/package/webpack) config file with 4 mo
 - OUTPUT_DIR: The output directory. (default: "build")
 - OUTPUT_FILES: (default: "[name]/bundle.js")
 
+## Installation
+```sh
+npm install web-extpack
+```
+
 ## Commands
 
 ```
