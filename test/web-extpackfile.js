@@ -5,14 +5,16 @@ module.exports = {
     "OUTPUT_FILES": "[name]/index.js",
     "mode": "production",
     "module": {
-        "rules" : [
+        "rules": [
             {
                 "test": /\.js$/,
                 "exclude": /(node_modules|bower_components)/,
                 "loader": "babel-loader",
                 "options": {
-                    "presets": ["env"],
-                    "plugins": ['transform-runtime']
+                    "presets": [
+                        ['@babel/preset-env', { "targets": "defaults" }]
+                    ],
+                    "plugins": ['@babel/plugin-proposal-class-properties']
                 }
             }
         ]
