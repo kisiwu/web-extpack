@@ -14,7 +14,7 @@ module.exports = {
                     "presets": [
                         ['@babel/preset-env', { "targets": "defaults" }]
                     ],
-                    "plugins": ['@babel/plugin-proposal-class-properties']
+                    "plugins": ['@babel/plugin-transform-class-properties']
                 }
             }
         ]
